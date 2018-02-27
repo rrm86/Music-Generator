@@ -9,6 +9,67 @@ from keras.utils import np_utils
 import pickle
 import glob
 
+
+
+notes = []
+duration = []
+
+for midfile in glob.glob('midi_source/beethoven/sonata14/*.mid'):
+
+    mid = converter.parse(midfile)
+    
+    notes_to_parse = None
+
+    parts = instrument.partitionByInstrument(mid)
+
+    if parts:  # file has instrument parts
+        notes_to_parse = parts.parts[0].recurse()
+
+    else:  # file has notes in a flat structure
+        notes_to_parse = mid.flat.notes
+        print('teste')
+
+    for element in notes_to_parse:
+        if isinstance(element, note.Note):
+            a = str(element.pitch)
+            duration.append(str(element.duration.quarterLength))
+            a += ("|")
+            a += str(element.duration.quarterLength)
+            notes.append(a)
+
+
+        elif isinstance(element, chord.Chord):
+            chord_pitches=[]
+            
+
+            for p in element.pitches:
+                chord_pitches.append(p.midi)
+
+            
+            chord_pitches = str(chord_pitches).strip('[]')
+            
+            
+           
+            chord_pitches += ("|")
+            
+            chord_duration = str(element.duration.quarterLength)
+            
+            
+            chord_pitches += chord_duration
+            chord_pitches += ("|chord")
+
+        
+            notes.append(chord_pitches)
+            with open('data/sonata14', 'wb') as path:
+                pickle.dump(notes, path)
+    
+
+    print(notes)
+
+
+
+
+
 with open('data/beethoven', 'rb') as path:
         notes = pickle.load(path)
         
