@@ -13,7 +13,7 @@ import glob
 
 notes = []
 duration = []
-
+'''
 for midfile in glob.glob('midi_source/beethoven/sonata14/mond_1_format0.mid'):
 
     mid = converter.parse(midfile)
@@ -66,7 +66,7 @@ for midfile in glob.glob('midi_source/beethoven/sonata14/mond_1_format0.mid'):
 
     print(notes)
 
-
+'''
 
 
 
@@ -105,12 +105,12 @@ y = np_utils.to_categorical(dataY)
 # define the LSTM model
 
 model = Sequential()
-model.add(LSTM(1024, input_shape=(X.shape[1], X.shape[2]), return_sequences=True))
+model.add(LSTM(512, input_shape=(X.shape[1], X.shape[2]), return_sequences=True))
 model.add(Dropout(0.3))
-model.add(LSTM(1024))
+model.add(LSTM(512))
 model.add(Dropout(0.3))
 model.add(Dense(y.shape[1], activation='softmax'))
-model.compile(loss='categorical_crossentropy', optimizer='adam')
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 # define the checkpoint
 # define the checkpoint
 filepath="w{epoch:02d}-{loss:.4f}-sonata14.1.hdf5"
