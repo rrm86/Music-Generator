@@ -13,8 +13,8 @@ import glob
 
 notes = []
 duration = []
-'''
-for midfile in glob.glob('midi_source/beethoven/sonata14/mond_1_format0.mid'):
+
+for midfile in glob.glob('midi_source/beethoven/elise.mid'):
 
     mid = converter.parse(midfile)
     
@@ -66,11 +66,9 @@ for midfile in glob.glob('midi_source/beethoven/sonata14/mond_1_format0.mid'):
 
     print(notes)
 
-'''
 
 
-
-with open('data/sonata14.1', 'rb') as path:
+with open('data/elise', 'rb') as path:
         notes = pickle.load(path)
         
 chars = sorted(list(set(notes)))
@@ -84,7 +82,7 @@ print ("Total Vocab: ")
 print(n_vocab)
 print(notes)
 
-seq_length = 50
+seq_length = 100
 dataX = []
 dataY = []
 for i in range(0, n_chars - seq_length, 1):
@@ -117,4 +115,4 @@ filepath="w{epoch:02d}-{loss:.4f}-sonata14.1.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 # fit the model
-model.fit(X, y, epochs=150, batch_size=50, callbacks=callbacks_list)
+model.fit(X, y, epochs=200, batch_size=60, callbacks=callbacks_list)
