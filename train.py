@@ -60,7 +60,7 @@ for midfile in glob.glob('midi_source/beethoven/elise.mid'):
 
         
             notes.append(chord_pitches)
-            with open('data/sonata14.1', 'wb') as path:
+            with open('data/elise', 'wb') as path:
                 pickle.dump(notes, path)
     
 
